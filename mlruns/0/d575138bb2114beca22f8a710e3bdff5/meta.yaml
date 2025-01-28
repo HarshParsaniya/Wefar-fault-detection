@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/harsh/Desktop/AIML%20Project/Wefar%20Fault%20Detection/mlruns/0/d575138bb2114beca22f8a710e3bdff5/artifacts
+end_time: 1738060008752
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d575138bb2114beca22f8a710e3bdff5
+run_name: Model Training
+run_uuid: d575138bb2114beca22f8a710e3bdff5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1738059975289
+status: 3
+tags: []
+user_id: harsh

@@ -77,7 +77,7 @@ class DataTransformation:
                 mlflow.log_param("test_data_shape", test_df.shape)
 
                 # Remove null columns
-                train_df.dropna(axis=1, inplace=True)
+                train_df.dropna(axis=1, how='all', inplace=True)
 
                 # Remove unnecessary columns
                 train_df.drop(['Unnamed: 0', 'Good/Bad'], axis=1, inplace=True, errors='ignore')
