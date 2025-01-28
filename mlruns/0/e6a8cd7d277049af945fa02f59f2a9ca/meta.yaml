@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/harsh/Desktop/AIML%20Project/Wefar%20Fault%20Detection/mlruns/0/e6a8cd7d277049af945fa02f59f2a9ca/artifacts
+end_time: 1738049900999
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e6a8cd7d277049af945fa02f59f2a9ca
+run_name: Data Transformation
+run_uuid: e6a8cd7d277049af945fa02f59f2a9ca
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1738049900656
+status: 4
+tags: []
+user_id: harsh
