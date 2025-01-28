@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/harsh/Desktop/AIML%20Project/Wefar%20Fault%20Detection/mlruns/0/e9f75a1e8a2344a1b143030b56e167b8/artifacts
+end_time: 1738063252887
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e9f75a1e8a2344a1b143030b56e167b8
+run_name: Data Ingestion
+run_uuid: e9f75a1e8a2344a1b143030b56e167b8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1738063250409
+status: 3
+tags: []
+user_id: harsh

@@ -1,0 +1,1 @@
+[{"run_id": "266f0a9bea3e41f68581239f976326a2", "artifact_path": "Hierarchical cluster Model", "utc_time_created": "2025-01-28 11:21:21.983884", "model_uuid": "2a86668b2068478683b28beba0948bf0", "flavors": {"sklearn": {"pickled_model": "model.pkl", "sklearn_version": "1.6.1", "serialization_format": "cloudpickle", "code": null}}}]

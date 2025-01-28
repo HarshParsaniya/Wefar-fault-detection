@@ -16,8 +16,8 @@ import mlflow
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = os.path.join('artifacts', 'train.csv')
-    test_data_path: str = os.path.join('artifacts', 'test.csv')
+    train_data_path: str = os.path.join('artifacts/unsupervised', 'train.csv')
+    test_data_path: str = os.path.join('artifacts/unsupervised', 'test.csv')
 
 
 class DataIngestion:

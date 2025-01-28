@@ -1,9 +1,9 @@
 import os
 import sys
 
-from wefar_fault_detection.components.data_ingestion import DataIngestion
-from wefar_fault_detection.components.data_transformation import DataTransformation
-from wefar_fault_detection.components.model_trainer import ModelTrainer
+from wefar_fault_detection.components.unsupervised.data_ingestion import DataIngestion
+from wefar_fault_detection.components.unsupervised.data_transformation import DataTransformation
+from wefar_fault_detection.components.unsupervised.model_trainer import ModelTrainer
 
 import pandas as pd
 
