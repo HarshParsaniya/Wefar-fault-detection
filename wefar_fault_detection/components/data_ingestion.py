@@ -40,10 +40,10 @@ class DataIngestion:
 
                 # Save train and test datasets
                 train_data.to_csv(self.data_ingestion_config.train_data_path, index=False, header=True)
-                mlflow.log_artifact(self.data_ingestion_config.train_data_path, artifact_path='artifacts/train')
+                mlflow.log_artifact(self.data_ingestion_config.train_data_path, artifact_path='train')
 
                 test_data.to_csv(self.data_ingestion_config.test_data_path, index=False, header=True)
-                mlflow.log_artifact(self.data_ingestion_config.test_data_path, artifact_path='artifacts/test')
+                mlflow.log_artifact(self.data_ingestion_config.test_data_path, artifact_path='test')
 
                 mlflow.log_metric('Ingestion status', 1)
 

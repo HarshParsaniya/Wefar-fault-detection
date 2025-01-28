@@ -30,7 +30,8 @@ class ModelTrainer:
                 train_model_report = []
                 test_model_report = []
                 best_model = None
-                final_k = 0
+                final_k = 2
+                best_train_score = -1
 
                 for k in range(2, 11):
                     # Initialize and train the base model
@@ -47,17 +48,21 @@ class ModelTrainer:
                     test_model_report.append(test_score)
 
                     # Track the best model based on train silhouette score
-                    if train_score > max(train_model_report):
+                    if train_score > best_train_score:
+                        best_train_score = train_score
                         final_k = k
-                        best_model = model
+                        best_model = AgglomerativeClustering(n_clusters=k)
+                        best_model.fit(train_array) 
                     
 
-                mlflow.log_metrics({
-                    "Accuracy": train_model_report[final_k-2]
-                })
-
                 mlflow.log_params({
-                    "Accuracy": test_model_report[final_k-2]
+                    "K_value" : final_k
+                })
+                mlflow.log_metrics({
+                    "Train_Accuracy": train_model_report[final_k-2]               
+                })
+                mlflow.log_params({
+                    "Test_Accuracy": test_model_report[final_k-2]
                 })
 
                 # Save models and log as artifacts
@@ -69,4 +74,4 @@ class ModelTrainer:
 
         except Exception as e:
             mlflow.log_metric("training_status", 0)
-            raise CustomException(e, sys) from e
+            raise CustomException(e, sys)
