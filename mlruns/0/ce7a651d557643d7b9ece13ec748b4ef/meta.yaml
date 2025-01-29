@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/harsh/Desktop/AIML%20Project/Wefar%20Fault%20Detection/mlruns/0/ce7a651d557643d7b9ece13ec748b4ef/artifacts
+end_time: 1738135637934
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ce7a651d557643d7b9ece13ec748b4ef
+run_name: Optimize Model Trainer
+run_uuid: ce7a651d557643d7b9ece13ec748b4ef
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1738135614966
+status: 3
+tags: []
+user_id: harsh

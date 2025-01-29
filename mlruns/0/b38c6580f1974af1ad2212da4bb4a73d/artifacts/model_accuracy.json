@@ -1,0 +1,7 @@
+{
+  "LogisticRegression": 0.9961915125136017,
+  "DecisionTreeClassifier": 0.9961915125136017,
+  "SVC": 0.998911860718172,
+  "RandomForestClassifier": 0.9961915125136017,
+  "XGBClassifier": 0.9961915125136017
+}

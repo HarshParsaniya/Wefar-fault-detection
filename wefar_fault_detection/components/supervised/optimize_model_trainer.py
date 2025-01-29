@@ -9,8 +9,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier
-from sklearn.model_selection import GridSearchCV
+# from xgboost import XGBClassifier
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import accuracy_score
 
 from wefar_fault_detection.exception.exception import CustomException
@@ -38,13 +38,12 @@ class OptimizeModelTrainer:
         try:
             with mlflow.start_run(run_name='Optimize Model Trainer'):
                 # param_grid for optimize the model
-                param_grid = {
+                param_distributions = {
                     'LogisticRegression' : {
                         'penalty': ['l1', 'l2'],
                         'C': [0.001, 0.01, 0.1, 1, 10],
                         'max_iter': [100, 500, 1000],
                         'solver': ['liblinear'],
-                        'multi_class': ['auto']
                     },
 
                     'DecisionTreeClassifier' : {
@@ -71,12 +70,13 @@ class OptimizeModelTrainer:
                         'max_features': ['sqrt', 'log2'],
                     },
 
-                    'XGBClassifier' : {
-                        'n_estimators': [10, 50, 100, 200, 500],
-                        'learning_rate': [0.01, 0.1, 0.5, 1],
-                        'max_depth': [3, 5, 10, 20, 50],
-                        'subsample': [0.5, 0.75, 1]
-                    }
+                    # 'XGBClassifier' : {
+                    #     'n_estimators': [10, 50, 100],
+                    #     'learning_rate': [0.01, 0.1, 0.5],
+                    #     'max_depth': [3, 5, 10],
+                    #     'subsample': [0.5, 0.75],
+                    #     'colsample_bytree': [0.5, 0.75]
+                    # }
                 }
 
                 # Splitting Dependent and Independent variables from train and test data
@@ -87,7 +87,7 @@ class OptimizeModelTrainer:
                     test_array[:, -1]
                 )
 
-                mlflow.log_dict(param_grid, "optimize_model_param_grid.json")
+                mlflow.log_dict(param_distributions, "optimize_model_param_grid.json")
                 
                 mlflow.log_param('Training_Row_shape', X_train.shape[0])
                 mlflow.log_param('Training_Column_shape', X_train.shape[1])
@@ -102,7 +102,7 @@ class OptimizeModelTrainer:
                     "DecisionTreeClassifier": DecisionTreeClassifier(),
                     "SVC": SVC(),
                     "RandomForestClassifier": RandomForestClassifier(),
-                    "XGBClassifier": XGBClassifier()
+                    # "XGBClassifier": XGBClassifier(eval_metric="mlogloss")
                 }
 
                 # Check for NaN values
@@ -114,21 +114,24 @@ class OptimizeModelTrainer:
                 all_model_report = {}
                 for model_name, model in models.items():
                     try:
-                        grid_search = GridSearchCV(
+                        random_search = RandomizedSearchCV(
                             model, 
-                            param_grid=param_grid[model_name],
+                            param_distributions=param_distributions[model_name],
                             cv=5,
                             scoring='accuracy',
-                            n_jobs=-1
+                            n_jobs=-1,
+                            n_iter=10,
+                            random_state=42
                         )
-                        grid_search.fit(X_train, y_train)
-                        y_pred = grid_search.predict(X_test)
+                        random_search.fit(X_train, y_train)
+                        y_pred = random_search.predict(X_test)
                         accuracy = accuracy_score(y_test, y_pred)
                         all_model_report[model_name] = accuracy
 
                         # Save the model
                         model_path = getattr(self.optimize_model_trainer, f"{model_name.lower()}_data_path")
-                        save_object(model_path, grid_search)
+                        # model_path = self.optimize_model_trainer.model_paths[model_name]
+                        save_object(model_path, random_search)
                         mlflow.log_param(f"{model_name}_model_path", model_path)
                         mlflow.log_metric(f"{model_name}_Accuracy", accuracy)
 
@@ -136,10 +139,13 @@ class OptimizeModelTrainer:
                         print(f"Error training {model_name}: {model_error}")
                         mlflow.log_param(f"{model_name}_Error", str(model_error))
 
+                if not all_model_report:
+                    raise ValueError("No models were successfully trained. Check the error messages above.")
+
                 # Log accuracy scores
                 mlflow.log_dict(all_model_report, "optimize_model_accuracy.json")
 
-                mlflow.log_param('Optimize_Accuracy_score', all_model_report)
+                # mlflow.log_param('Optimize_Accuracy_score', all_model_report)
 
                 # Select the best model
                 best_model_name = max(all_model_report, key=all_model_report.get)
